@@ -1,9 +1,10 @@
-package com.notnex.nodes
+package com.notnex.nodes.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,22 +14,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.notnex.nodes.model.NodeRepository
 import com.notnex.nodes.model.NodesViewModel
 import com.notnex.nodes.ui.theme.NodesTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint
+class MainActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val viewModel: NodesViewModel by viewModels()
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        val repository = NodeRepository(applicationContext)
-        val vm = NodesViewModel(repository)
-
         setContent {
             NodesTheme {
                 Scaffold { padding ->
-                    NodeScreen(viewModel = vm, modifier = Modifier.padding(padding))
+                    NodeScreen(viewModel = viewModel, modifier = Modifier.padding(padding))
             }
             }
         }
@@ -61,13 +62,3 @@ fun NodeScreen(viewModel: NodesViewModel, modifier: Modifier = Modifier) {
         }
     }
 }
-
-
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    NodesTheme {
-//        NodeScreen(viewModel = NodesViewModel(NodeRepository(applicationContext)))
-//    }
-//}

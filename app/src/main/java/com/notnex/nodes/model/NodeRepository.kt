@@ -5,11 +5,14 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.notnex.nodes.datastore.Node
 import com.notnex.nodes.datastore.nodeStore
+import dagger.hilt.android.qualifiers.ApplicationContext
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.json.Json
 
-class NodeRepository(private val context: Context) {
-
+class NodeRepository @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
     private val json = Json { ignoreUnknownKeys = true; prettyPrint = true }
     private val nodeKey = stringPreferencesKey("node_tree")
 

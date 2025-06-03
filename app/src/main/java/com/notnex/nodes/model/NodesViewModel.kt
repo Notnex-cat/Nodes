@@ -5,10 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.notnex.nodes.datastore.Node
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.launch
 
-
-class NodesViewModel(
+@HiltViewModel
+class NodesViewModel @Inject constructor(
     private val repository: NodeRepository
 ) : ViewModel() {
 
