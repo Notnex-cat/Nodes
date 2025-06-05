@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
@@ -41,7 +43,7 @@ fun NodeScreen(viewModel: NodesViewModel, modifier: Modifier = Modifier) {
     val node by viewModel.currentNode
 
     Column (
-        modifier = modifier.padding()
+        modifier = modifier.fillMaxSize()
     ) {
         Button(onClick = { viewModel.goToParent() }) {
             Text("Назад")
@@ -54,11 +56,16 @@ fun NodeScreen(viewModel: NodesViewModel, modifier: Modifier = Modifier) {
         LazyColumn {
             items(node.children.size) { index ->
                 val child = node.children[index]
-                Button(onClick = { viewModel.goToChild(child) }) {
-                    Text(child.name)
+                Column {
+                    Button(onClick = { viewModel.goToChild(child) }) {
+                        Text(child.name)
+                    }
+                    Button(onClick = { viewModel.removeChild(child) }) {
+                        Text("Удалить")
+                    }
                 }
             }
-
         }
+
     }
 }

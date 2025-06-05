@@ -16,13 +16,17 @@ data class Node(
     val children: SnapshotStateList<Node> = mutableStateListOf(),
     @Transient var parent: Node? = null
 ) {
-    fun addChild(): Node {
-        val child = Node(parent = this)
-        children.add(child)
-        return child
+    fun assignParentsRecursively(parentNode: Node? = null) {
+        parent = parentNode
+        children.forEach { it.assignParentsRecursively(this) }
     }
 
-    fun removeChild(child: Node) {
-        children.remove(child)
+}
+
+fun Node.root(): Node {
+    var node = this
+    while (node.parent != null) {
+        node = node.parent!!
     }
+    return node
 }
